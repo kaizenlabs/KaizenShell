@@ -10,7 +10,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/JohnAntonusMaximus/KaizenShell/shell"
+	"github.com/johnantonusmaximus/KaizenShell/shell"
 )
 
 func Meterpreter(connType, address string) (bool, error) {
