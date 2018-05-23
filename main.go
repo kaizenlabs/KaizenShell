@@ -11,8 +11,8 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/JohnAntonusMaximus/KaizenShell/shell"
 	"github.com/johnantonusmaximus/KaizenShell/meterpreter"
+	"github.com/johnantonusmaximus/KaizenShell/shell"
 )
 
 const (
