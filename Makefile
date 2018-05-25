@@ -1,6 +1,7 @@
 # Makefile
 BUILD=go build 
 SOURCE=main.go
+MAKEAPP=go run ./appmaker/mac.go
 OUT_LINUX=Homebrew
 OUT_WINDOWS=Homebrew.exe
 SRV_KEY=server.key 
@@ -30,44 +31,12 @@ windows64:
 	GOOS=windows GOARCH=amd64 ${BUILD} ${WINDOWS_LDFLAGS} -o ${OUT_WINDOWS} ${SRC}
 
 macos32:
-	GOOS=darwin GOARCH=386 ${BUILD} ${LINUX_LDFLAGS} -o ./Homebrew.app/Contents/MacOS/${OUT_LINUX} ${SRC}
-	echo "<?xml version="1.0" encoding="UTF-8"?> \
-		<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"> \
-		<plist version="1.0"> \
-		<dict> \
-			<key>CFBundleExecutable</key> \
-			<string>${OUT_LINUX}</string> \
-			<key>CFBundleIconFile</key> \
-			<string>icon.icns</string> \
-			<key>CFBundleIdentifier</key> \
-			<string>com.${DOMAIN}.app</string> \
-			<key>NSHighResolutionCapable</key> \
-			<true/> \
-			<key>LSUIElement</key> \
-			<true/> \
-		</dict> \
-		</plist>" >> ./homebrew.app/Contents/Info.plist
+	GOOS=darwin GOARCH=386 ${BUILD} ${LINUX_LDFLAGS} -o ${OUT_LINUX} ${SRC}
+	${MAKEAPP} -assets ./assets -bin ${NAME} -icon ./assets/${NAME}.png -identifier com.${DOMAIN}.app -name ${NAME} -dmg ./appmaker/Homebrew.dmg -o ./dist/osx 
 
 macos64:
-	GOOS=darwin GOARCH=amd64 ${BUILD} ${LINUX_LDFLAGS} -o ./Homebrew.app/Contents/MacOS/${OUT_LINUX} ${SRC}
-	echo "<?xml version="1.0" encoding="UTF-8"?> \
-		<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"> \
-		<plist version="1.0"> \
-		<dict> \
-			<key>CFBundleExecutable</key> \
-			<string>${OUT_LINUX}</string> \
-			<key>CFBundleIconFile</key> \
-			<string>icon.icns</string> \
-			<key>CFBundleIdentifier</key> \
-			<string>com.${DOMAIN}.app</string> \
-			<key>NSHighResolutionCapable</key> \
-			<true/> \
-			<key>LSUIElement</key> \
-			<true/> \
-		</dict> \
-		</plist>" >> ./homebrew.app/Contents/Info.plist
-
+	GOOS=darwin GOARCH=amd64 ${BUILD} ${LINUX_LDFLAGS} -o ./dist/osx/Homebrew.app/Contents/MacOS/${OUT_LINUX} ${SRC}
+	${MAKEAPP} -assets ./assets -bin ${NAME} -icon ./assets/${NAME}.png -identifier com.${DOMAIN}.app -name ${NAME} -dmg ./appmaker/Homebrew.dmg -o ./dist/osx 
 clean:
-	rm -rf ${SRV_KEY} ${SRV_PEM} ${OUT_LINUX} ${OUT_WINDOWS} ./Homebrew.app/Contents/MacOS/${OUT_LINUX}
-	> ./Homebrew.app/Contents/Info.plist
+	rm -rf ${SRV_KEY} ${SRV_PEM} ./dist/linux/${OUT_LINUX} ./dist/windows/${OUT_WINDOWS} ./dist/osx/Homebrew.app ./dist/osx/*.dmg
 	

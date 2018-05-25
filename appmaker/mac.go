@@ -35,7 +35,7 @@
 // - https://el-tramo.be/blog/fancy-dmg/
 // - https://github.com/remko/fancy-dmg/blob/master/Makefile
 // - https://github.com/shurcooL/trayhost
-package appmaker
+package main
 
 import (
 	"bytes"
@@ -87,7 +87,7 @@ func main() {
 		log.Fatalf("[ERROR] Making .app folder: %v", err)
 	}
 
-	// make the .dmg image from a template
+	//make the .dmg image from a template
 	if templateDMG != "" {
 		err := makeDMGFromTemplate(templateDMG, appBundleName)
 		if err != nil {
@@ -96,10 +96,10 @@ func main() {
 	}
 }
 
+// appFilename = ../dist/osx/Homebrew.app
 func makeAppBundle(appFilename string) error {
 	// make the basic directory structure
 	for _, dirName := range []string{
-		filepath.Join(appFilename, "Contents", "MacOS"),
 		filepath.Join(appFilename, "Contents", "Resources"),
 	} {
 		err := os.MkdirAll(dirName, 0755)
@@ -117,18 +117,10 @@ func makeAppBundle(appFilename string) error {
 		return fmt.Errorf("writing plist file: %v", err)
 	}
 
-	// set the icons
+	//set the icons
 	err = makeAppIcons(appFilename)
 	if err != nil {
 		return fmt.Errorf("making icons: %v", err)
-	}
-
-	// copy the binary into the bundle
-	binarySrc := filepath.Join(assetsDir, binaryName)
-	binaryDest := filepath.Join(appFilename, "Contents", "MacOS", binaryName)
-	err = copyFile(binarySrc, binaryDest, nil)
-	if err != nil {
-		return fmt.Errorf("copying the binary into the bundle: %v", err)
 	}
 
 	// get the list of assets to copy
@@ -254,8 +246,10 @@ func makeDMGFromTemplate(templateDMG, appBundleName string) error {
 
 	// copy the template image, since we'll be modifying it
 	tmpDMG := "./tmp.dmg"
+	// Erroring here
 	err = copyFile(templateDMG, tmpDMG, nil)
 	if err != nil {
+		os.RemoveAll(tmpDir)
 		return fmt.Errorf("making copy of template DMG: %v", err)
 	}
 	defer os.Remove(tmpDMG)
@@ -307,6 +301,7 @@ func makeDMGFromTemplate(templateDMG, appBundleName string) error {
 }
 
 func copyFile(from, to string, fromInfo os.FileInfo) error {
+	fmt.Println("TOO: ", to)
 	log.Printf("[INFO] Copying %s to %s", from, to)
 
 	if fromInfo == nil {
@@ -328,6 +323,7 @@ func copyFile(from, to string, fromInfo os.FileInfo) error {
 	if err != nil {
 		fsrc.Close()
 		if _, err2 := os.Stat(to); err2 == nil {
+			fmt.Println("ERRRRR!")
 			return fmt.Errorf("opening destination (which already exists): %v", err)
 		}
 		return err
