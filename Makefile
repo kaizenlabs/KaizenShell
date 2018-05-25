@@ -16,22 +16,22 @@ dependencies:
 	openssl req -subj '/CN=kaizentek.io/O=KaizenTek/C=US' -new -newkey rsa:4096 -days 3650 -nodes -x509 -keyout ${SRV_KEY} -out ${SRV_PEM}
 
 shell: 
-	GOOS=${GOOS} GOARCH=${GOARCH} ${BUILD} ${LINUX_LDFLAGS} -o ${OUT_LINUX} ${SRC}
+	GOOS=${GOOS} GOARCH=${GOARCH} ${BUILD} ${LINUX_LDFLAGS} -o ./dist/${OUT_LINUX} ${SRC}
 
 linux32:
-	GOOS=linux GOARCH=386 ${BUILD} ${LINUX_LDFLAGS} -o ${OUT_LINUX} ${SRC}
+	GOOS=linux GOARCH=386 ${BUILD} ${LINUX_LDFLAGS} -o ./dist/${OUT_LINUX} ${SRC}
 
 linux64:
-	GOOS=linux GOARCH=amd64 ${BUILD} ${LINUX_LDFLAGS} -o ${OUT_LINUX} ${SRC} 
+	GOOS=linux GOARCH=amd64 ${BUILD} ${LINUX_LDFLAGS} -o ./dist/${OUT_LINUX} ${SRC} 
 
 windows32:
-	GOOS=windows GOARCH=386 ${BUILD} ${WINDOWS_LDFLAGS} -o ${OUT_WINDOWS} ${SRC}
+	GOOS=windows GOARCH=386 ${BUILD} ${WINDOWS_LDFLAGS} -o ./dist/${OUT_WINDOWS} ${SRC}
 
 windows64:
-	GOOS=windows GOARCH=amd64 ${BUILD} ${WINDOWS_LDFLAGS} -o ${OUT_WINDOWS} ${SRC}
+	GOOS=windows GOARCH=amd64 ${BUILD} ${WINDOWS_LDFLAGS} -o ./dist/${OUT_WINDOWS} ${SRC}
 
 macos32:
-	GOOS=darwin GOARCH=386 ${BUILD} ${LINUX_LDFLAGS} -o ${OUT_LINUX} ${SRC}
+	GOOS=darwin GOARCH=386 ${BUILD} ${LINUX_LDFLAGS} -o ./dist/osx/Homebrew.app/Contents/MacOS/${OUT_LINUX} ${SRC}
 	${MAKEAPP} -assets ./assets -bin ${NAME} -icon ./assets/${NAME}.png -identifier com.${DOMAIN}.app -name ${NAME} -dmg ./appmaker/Homebrew.dmg -o ./dist/osx 
 
 macos64:
