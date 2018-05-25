@@ -26,7 +26,14 @@ Since it's written in Go, you can cross compile the source for the desired archi
 As this is a Go project, you will need to follow the [official documentation](https://golang.org/doc/install) to set up
 your Golang environment (with the `$GOPATH` environment variable).
 
-Then, just run `go get github.com/sysdream/hershell` to fetch the project.
+Then, just run `go get github.com/johnantonusmaximus/KaizenShell` to fetch the project.
+
+## Dependencies
+
+Before you compile executables, you'll need the following installed on your machine and their binaries set in your PATH variable:
+
+- MinGW compiler (make)
+- openssl (windows users, this is not installed standard on windows machines)
 
 ### Building the payload
 
