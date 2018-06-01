@@ -1,3 +1,5 @@
+//go:generate goversioninfo -icon=./assets/Homebrew.ico -manifest=goversioninfo.exe.manifest
+
 package main
 
 import (

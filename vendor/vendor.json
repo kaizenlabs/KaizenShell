@@ -1,0 +1,61 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "Y71DWZxVHxm5RKQDF2807roHrv4=",
+			"path": "github.com/akavel/rsrc/binutil",
+			"revision": "f6a15ece2cfd2560077c556499f19340ddc768e9",
+			"revisionTime": "2017-08-31T12:24:31Z"
+		},
+		{
+			"checksumSHA1": "dY6sByHSXr76sRhg42HvGqYhU5I=",
+			"path": "github.com/akavel/rsrc/coff",
+			"revision": "f6a15ece2cfd2560077c556499f19340ddc768e9",
+			"revisionTime": "2017-08-31T12:24:31Z"
+		},
+		{
+			"checksumSHA1": "8FHKm/Sc+zlYExn/UkdoG0Mk2cw=",
+			"path": "github.com/akavel/rsrc/ico",
+			"revision": "f6a15ece2cfd2560077c556499f19340ddc768e9",
+			"revisionTime": "2017-08-31T12:24:31Z"
+		},
+		{
+			"checksumSHA1": "N26qb9NjSj6jF2k9pIqnqEhbsI4=",
+			"path": "github.com/johnantonusmaximus/KaizenShell",
+			"revision": "b682213ede15763e71e36f46fa6d6053299f5290",
+			"revisionTime": "2018-05-25T04:38:28Z"
+		},
+		{
+			"checksumSHA1": "NVnEs3nRsfdS47IoPJsmn//n+8w=",
+			"path": "github.com/johnantonusmaximus/KaizenShell/appmaker",
+			"revision": "b682213ede15763e71e36f46fa6d6053299f5290",
+			"revisionTime": "2018-05-25T04:38:28Z"
+		},
+		{
+			"checksumSHA1": "R3f0UYsHFmXDyQA39a6tSXxLp7k=",
+			"path": "github.com/johnantonusmaximus/KaizenShell/meterpreter",
+			"revision": "b682213ede15763e71e36f46fa6d6053299f5290",
+			"revisionTime": "2018-05-25T04:38:28Z"
+		},
+		{
+			"checksumSHA1": "iveV7iQWtvyOpd/JTREnUi6xqAw=",
+			"path": "github.com/johnantonusmaximus/KaizenShell/shell",
+			"revision": "b682213ede15763e71e36f46fa6d6053299f5290",
+			"revisionTime": "2018-05-25T04:38:28Z"
+		},
+		{
+			"checksumSHA1": "yLvdPr+Utcu3hIE3vOBrnVug6lI=",
+			"path": "github.com/josephspurrier/goversioninfo",
+			"revision": "42534847954b7ad81d3794f16575ef9d24f21f5b",
+			"revisionTime": "2018-02-20T05:23:33Z"
+		},
+		{
+			"checksumSHA1": "e9VZ7LYVG26ms4H7wTEX2igVDbg=",
+			"path": "github.com/josephspurrier/goversioninfo/cmd/goversioninfo",
+			"revision": "42534847954b7ad81d3794f16575ef9d24f21f5b",
+			"revisionTime": "2018-02-20T05:23:33Z"
+		}
+	],
+	"rootPath": "github.com/johnantonusmaximus/KaizenShell"
+}
