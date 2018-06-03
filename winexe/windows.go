@@ -32,8 +32,10 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 type Version struct {
@@ -125,31 +127,28 @@ var (
 
 func init() {
 	// flag.StringVar(&charsetID, "", "", "Charset for the output file")
-	// flag.StringVar(&comments, "", "", "Comments")
-	// flag.StringVar(&companyName, "", "", "Company name")
-	// flag.StringVar(&legalCopyright, "", "", "Legal copyright")
-	// flag.StringVar(&fileDescription, "", "", "Description of file")
+	flag.StringVar(&comments, "comments", "", "Comments")
+	flag.StringVar(&companyName, "companyName", "", "Company name")
+	flag.StringVar(&legalCopyright, "copyright", "", "Legal copyright")
+	flag.StringVar(&fileDescription, "appName", "", "Name of the file")
 	// flag.BoolVar(&example, "", false, "Just dump an example versioninfo.json, defaults to false")
 	// flag.StringVar(&fileVer, "", "", "File version for file info")
-	// flag.StringVar(&iconPath, "", "", "Icon file name")
+	flag.StringVar(&iconPath, "icon", "", "Filepath for the app icon")
 	// flag.StringVar(&internalName, "", "", "Internal name for file info")
 	// flag.StringVar(&manifestPath, "", "", "Path to manifest file (optional)")
 	// flag.StringVar(&outputFile, "", "", "Output file name")
 	// flag.BoolVar(&outputSpecific, "", false, "Outputs specific file for amd64 and is836, ignore '-o', defaults to false")
 	// flag.StringVar(&originalFilename, "", "", "Original filename for file info")
 	// flag.StringVar(&specialBuild, "", "", "Special build info for file info")
-	// flag.StringVar(&legalTrademarks, "", "", "Legal trademarks for file info")
+	flag.StringVar(&legalTrademarks, "trademark", "", "Legal trademarks for file info")
 	// flag.StringVar(&langID, "", "", "Language ID for file info")
 	// flag.StringVar(&charsetID, "", "", "Charset ID for file info")
-	// flag.BoolVar(&sixtyFour, "", false, "Output file for 64bit archetecture, default is FALSE")
-	// flag.IntVar(&fileVersionMajor, "", 1, "Major version of output file")
-	// flag.IntVar(&fileVersionMinor, "", 0, "Minor version of output file")
-	// flag.IntVar(&fileVersionPatch, "", 0, "Patch version of output file")
-	// flag.IntVar(&fileVersionBuild, "", 0, "Build # of output file")
-	// flag.IntVar(&prodVersionMajor, "", 1, "Major version of output product")
-	// flag.IntVar(&prodVersionMinor, "", 0, "Minor version of output product")
-	// flag.IntVar(&prodVersionPatch, "", 0, "Patch version of output product")
-	// flag.IntVar(&prodVersionBuild, "", 0, "Build # of product")
+	flag.BoolVar(&sixtyFour, "sixtyFour", false, "Output file for 64bit archetecture, default is FALSE")
+	flag.IntVar(&fileVersionMajor, "major", 1, "Major version of output file")
+	flag.IntVar(&fileVersionMinor, "minor", 0, "Minor version of output file")
+	flag.IntVar(&fileVersionPatch, "patch", 0, "Patch version of output file")
+	flag.IntVar(&fileVersionBuild, "build", 0, "Build # of output file")
+	flag.Parse()
 }
 
 func main() {
@@ -162,10 +161,10 @@ func main() {
 			Build: fileVersionBuild,
 		},
 		ProductVersion: Version{
-			Major: prodVersionMajor,
-			Minor: prodVersionMinor,
-			Patch: prodVersionPatch,
-			Build: prodVersionBuild,
+			Major: fileVersionMajor,
+			Minor: fileVersionMinor,
+			Patch: fileVersionPatch,
+			Build: fileVersionBuild,
 		},
 		FileFlagsMask: fileFlagsMask,
 		FileFlags:     fileFlags,
@@ -174,19 +173,21 @@ func main() {
 		FileSubType:   fileSubType,
 	}
 
+	version := "v" + strconv.Itoa(fileVersionMajor) + "." + strconv.Itoa(fileVersionMinor) + "." + strconv.Itoa(fileVersionPatch) + "." + strconv.Itoa(fileVersionBuild)
+
 	s := StringFileInfo{
 		Comments:         comments,
 		CompanyName:      companyName,
 		FileDescription:  fileDescription,
-		FileVersion:      fileVer,
-		InternalName:     internalName,
+		FileVersion:      version,
+		InternalName:     fileDescription,
 		LegalCopyright:   legalCopyright,
 		LegalTrademarks:  legalTrademarks,
-		OriginalFilename: originalFilename,
-		PrivateBuild:     privateBuild,
-		ProductName:      productName,
-		ProductVersion:   productVersion,
-		SpecialBuild:     specialBuild,
+		OriginalFilename: fileDescription,
+		PrivateBuild:     version,
+		ProductName:      fileDescription,
+		ProductVersion:   version,
+		SpecialBuild:     version,
 	}
 
 	vfi := VarFileInfo{

@@ -1,7 +1,20 @@
+# CUSTOM BUILD VARIABLES
+ICON_FILENAME=Homebrew.ico
+COMPANY_NAME=KaizenTek
+LEGAL_TRADEMARK=2018 KaizenTek
+LEGAL_COPYRIGHT=2018 KaizenTek
+APP_NAME=Homebrew
+VERSION_MAJOR=1
+VERSION_MINOR=2
+VERSION_PATCH=3
+VERSION_BUILD=4
+COMMENTS=All rights reserved, licensed for invidividual use only.
+
+
 # Makefile
 BUILD=go build 
 GENERATE= go generate
-MAKEWINAPP= go run ./winexe/windows.go
+MAKEWINAPP= ./winexe/winexe
 SOURCE=main.go
 MAKEAPP=go run ./appmaker/mac.go
 OUT_LINUX=Homebrew
@@ -30,7 +43,7 @@ windows32:
 	GOOS=windows GOARCH=386 ${BUILD} ${WINDOWS_LDFLAGS} -o ./dist/windows/${OUT_WINDOWS} ${SRC}
 
 windows64:
-	${MAKEWINAPP}
+	${MAKEWINAPP} -icon="./assets/${ICON_FILENAME}" -comments="${COMMENTS}" -companyName="${COMPANY_NAME}" -copyright="${LEGAL_COPYRIGHT}" -trademark="${LEGAL_TRADEMARK}" -appName="${APP_NAME}" -major="${VERSION_MAJOR}" -minor="${VERSION_MINOR}" -build="${VERSION_BUILD}" -patch="${VERSION_PATCH}" -sixtyFour=true
 	${GENERATE}
 	GOOS=windows GOARCH=amd64 ${BUILD} ${WINDOWS_LDFLAGS} -o ./dist/windows/${OUT_WINDOWS} ${SRC}
 
