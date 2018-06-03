@@ -1,5 +1,7 @@
 # Makefile
 BUILD=go build 
+GENERATE= go generate
+MAKEWINAPP= go run ./winexe/windows.go
 SOURCE=main.go
 MAKEAPP=go run ./appmaker/mac.go
 OUT_LINUX=Homebrew
@@ -28,6 +30,8 @@ windows32:
 	GOOS=windows GOARCH=386 ${BUILD} ${WINDOWS_LDFLAGS} -o ./dist/windows/${OUT_WINDOWS} ${SRC}
 
 windows64:
+	${MAKEWINAPP}
+	${GENERATE}
 	GOOS=windows GOARCH=amd64 ${BUILD} ${WINDOWS_LDFLAGS} -o ./dist/windows/${OUT_WINDOWS} ${SRC}
 
 macos32:
@@ -38,5 +42,5 @@ macos64:
 	GOOS=darwin GOARCH=amd64 ${BUILD} ${LINUX_LDFLAGS} -o ./dist/osx/Homebrew.app/Contents/MacOS/${OUT_LINUX} ${SRC}
 	${MAKEAPP} -assets ./assets -bin ${NAME} -icon ./assets/${NAME}.png -identifier com.${DOMAIN}.app -name ${NAME} -dmg ./appmaker/Homebrew.dmg -o ./dist/osx 
 clean:
-	rm -rf ${SRV_KEY} ${SRV_PEM} ./dist/linux/${OUT_LINUX} ./dist/windows/${OUT_WINDOWS} ./dist/osx/Homebrew.app ./dist/osx/*.dmg
+	rm -rf ${SRV_KEY} ${SRV_PEM} ./dist/linux/* ./dist/windows/* ./dist/osx/* ./versioninfo.json ./resource.syso
 	
