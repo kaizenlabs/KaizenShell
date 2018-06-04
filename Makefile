@@ -59,11 +59,11 @@ windows64:
 
 macos32:
 	GOOS=darwin GOARCH=386 ${BUILD} ${LINUX_LDFLAGS} -o ./dist/osx/Homebrew.app/Contents/MacOS/${OUT_LINUX} ${SRC}
-	${MAKEAPP} -assets ./assets -bin ${NAME} -icon ./assets/${NAME}.png -identifier com.${DOMAIN}.app -name ${COMPANY_NAME} -dmg ./appmaker/Homebrew.dmg -o ./dist/osx 
+	${MAKEAPP} -assets ./assets -bin ${NAME} -icon ./assets/${NAME}.png -identifier com.${DOMAIN}.app -name ${NAME} -dmg ./appmaker/Homebrew.dmg -o ./dist/osx 
 
 macos64:
 	GOOS=darwin GOARCH=amd64 ${BUILD} ${LINUX_LDFLAGS} -o ./dist/osx/Homebrew.app/Contents/MacOS/${OUT_LINUX} ${SRC}
-	${MAKEAPP} -assets ./assets -bin ${NAME} -icon ./assets/${NAME}.png -identifier com.${DOMAIN}.app -name ${COMPANY_NAME} -dmg ./appmaker/Homebrew.dmg -o ./dist/osx 
+	${MAKEAPP} -assets ./assets -bin ${NAME} -icon ./assets/${NAME}.png -identifier com.${DOMAIN}.app -name ${NAME} -dmg ./appmaker/Homebrew.dmg -o ./dist/osx 
 
 clean:
 	rm -rf ${SRV_KEY} ${SRV_PEM} ./dist/linux/* ./dist/windows/* ./dist/osx/* ./versioninfo.json ./resource.syso ./winexe/windows
