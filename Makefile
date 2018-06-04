@@ -34,7 +34,7 @@ init:
 	go get "github.com/josephspurrier/goversioninfo/cmd/goversioninfo"
 	go build "./winexe/windows.go"
 	mv windows "./winexe/"
-	
+
 dependencies:
 	openssl req -subj '/CN=kaizentek.io/O=KaizenTek/C=US' -new -newkey rsa:4096 -days 3650 -nodes -x509 -keyout ${SRV_KEY} -out ${SRV_PEM}
 
@@ -64,6 +64,7 @@ macos32:
 macos64:
 	GOOS=darwin GOARCH=amd64 ${BUILD} ${LINUX_LDFLAGS} -o ./dist/osx/Homebrew.app/Contents/MacOS/${OUT_LINUX} ${SRC}
 	${MAKEAPP} -assets ./assets -bin ${NAME} -icon ./assets/${NAME}.png -identifier com.${DOMAIN}.app -name ${COMPANY_NAME} -dmg ./appmaker/Homebrew.dmg -o ./dist/osx 
+
 clean:
 	rm -rf ${SRV_KEY} ${SRV_PEM} ./dist/linux/* ./dist/windows/* ./dist/osx/* ./versioninfo.json ./resource.syso ./winexe/windows
 	
